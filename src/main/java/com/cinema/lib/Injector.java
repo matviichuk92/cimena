@@ -1,4 +1,4 @@
-package lib;
+package com.cinema.lib;
 
 import java.io.File;
 import java.io.IOException;
@@ -165,3 +165,4 @@ public class Injector {
         return classes;
     }
 }
+
