@@ -7,6 +7,7 @@ import com.cinema.model.MovieSession;
 import com.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -40,14 +41,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> getAvailableSessions(Long movieId, LocalDate showTime) {
+    public List<MovieSession> getAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> query = builder.createQuery(MovieSession.class);
             Root<MovieSession> root = query.from(MovieSession.class);
             Predicate byMovieId = builder.equal(root.get("movie"), movieId);
-            LocalDateTime start = showTime.atStartOfDay();
-            LocalDateTime end = showTime.atTime(23, 59);
+            LocalDateTime start = date.atStartOfDay();
+            LocalDateTime end = date.atTime(LocalTime.MAX);
             Predicate byDate = builder.between(root.get("showTime"), start, end);
             query.select(root).where(builder.and(byMovieId, byDate));
             return session.createQuery(query).getResultList();
