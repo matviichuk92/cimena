@@ -1,10 +1,12 @@
 package com.cinema;
 
+import com.cinema.exception.AuthenticationException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
 import com.cinema.model.User;
+import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
@@ -22,8 +24,10 @@ public class Application {
             = (MovieSessionService) injector.getInstance(MovieSessionService.class);
     static final UserService userService
             = (UserService) injector.getInstance(UserService.class);
+    static final AuthenticationService authenticationService
+            = (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         movie.setDescription("16+");
@@ -59,7 +63,8 @@ public class Application {
         User bot = new User();
         bot.setEmail("viktor.pankov@gmail.com");
         bot.setPassword("1234");
-        userService.add(bot);
+        System.out.println(authenticationService.register(bot.getEmail(), bot.getPassword()));
+        System.out.println(authenticationService.login(bot.getEmail(), bot.getPassword()));
         System.out.println(userService.findByEmail(bot.getEmail()));
         User newBot = new User();
         newBot.setEmail("viktor.pankov@gmail.com");
