@@ -1,6 +1,5 @@
 package com.cinema;
 
-import com.cinema.exception.AuthenticationException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
@@ -24,7 +23,7 @@ public class Application {
     static final UserService userService
             = (UserService) injector.getInstance(UserService.class);
 
-    public static void main(String[] args) throws AuthenticationException {
+    public static void main(String[] args) {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         movie.setDescription("16+");
@@ -42,15 +41,15 @@ public class Application {
         session.setMovie(movie);
         session.setShowTime(LocalDateTime.now());
         sessionService.add(session);
-        sessionService.findAvailableSessions(movie.getId(),LocalDate.now())
+        sessionService.findAvailableSessions(movie.getId(), LocalDate.now())
                 .forEach(System.out::println);
 
         MovieSession sessionSecond = new MovieSession();
         sessionSecond.setCinemaHall(cinemaHall);
         sessionSecond.setMovie(movie);
-        sessionSecond.setShowTime(LocalDateTime.of(2020,11,1,12,0));
+        sessionSecond.setShowTime(LocalDateTime.of(2020, 11, 1, 12, 0));
         sessionService.add(sessionSecond);
-        sessionService.findAvailableSessions(movie.getId(),LocalDate.now())
+        sessionService.findAvailableSessions(movie.getId(), LocalDate.now())
                 .forEach(System.out::println);
 
         User roma = new User();
