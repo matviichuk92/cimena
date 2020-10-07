@@ -1,12 +1,15 @@
 package com.cinema;
 
+import com.cinema.exception.AuthenticationException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.User;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,8 +21,10 @@ public class Application {
             = (CinemaHallService) injector.getInstance(CinemaHallService.class);
     static final MovieSessionService sessionService
             = (MovieSessionService) injector.getInstance(MovieSessionService.class);
+    static final UserService userService
+            = (UserService) injector.getInstance(UserService.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         movie.setDescription("16+");
@@ -47,5 +52,19 @@ public class Application {
         sessionService.add(sessionSecond);
         sessionService.findAvailableSessions(movie.getId(),LocalDate.now())
                 .forEach(System.out::println);
+
+        User roma = new User();
+        roma.setEmail("matviichuk.office@gmail.com");
+        roma.setPassword("1234");
+        userService.add(roma);
+        User bot = new User();
+        bot.setEmail("viktor.pankov@gmail.com");
+        bot.setPassword("1234");
+        userService.add(bot);
+        System.out.println(userService.findByEmail(bot.getEmail()));
+        User newBot = new User();
+        newBot.setEmail("viktor.pankov@gmail.com");
+        newBot.setPassword("3214");
+        userService.add(newBot);
     }
 }
