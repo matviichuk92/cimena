@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert user!", exception);
+            throw new DataProcessingException("Can't insert " + user, exception);
         } finally {
             if (session != null) {
                 session.close();
@@ -45,9 +45,9 @@ public class UserDaoImpl implements UserDao {
             Root<User> root = query.from(User.class);
             Predicate byEmail = builder.equal(root.get("email"), email);
             query.select(root).where(byEmail);
-            return Optional.of(session.createQuery(query).getSingleResult());
+            return session.createQuery(query).uniqueResultOptional();
         } catch (Exception exception) {
-            throw new DataProcessingException("Can't get user by email!", exception);
+            throw new DataProcessingException("Can't get user by " + email, exception);
         }
     }
 }
