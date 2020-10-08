@@ -8,6 +8,7 @@ import com.cinema.model.User;
 import com.cinema.util.HibernateUtil;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -44,6 +45,7 @@ public class ShoppingCartImpl implements ShoppingCartDao {
             CriteriaQuery<ShoppingCart> query = builder.createQuery(ShoppingCart.class);
             Root<ShoppingCart> root = query.from(ShoppingCart.class);
             Predicate byUserId = builder.equal(root.get("id"), user.getId());
+            root.fetch("tickets", JoinType.LEFT);
             query.select(root).where(byUserId);
             return session.createQuery(query).getSingleResult();
         } catch (Exception exception) {

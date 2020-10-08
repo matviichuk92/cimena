@@ -66,10 +66,12 @@ public class Application {
 
         shoppingCartService.registerNewShoppingCart(roma);
         shoppingCartService.addSession(session,roma);
+        shoppingCartService.addSession(secondSession,roma);
         System.out.println(shoppingCartService.getByUser(roma));
         shoppingCartService.registerNewShoppingCart(mila);
         shoppingCartService.addSession(secondSession,mila);
         System.out.println(shoppingCartService.getByUser(mila));
+        System.out.println(shoppingCartService.getByUser(mila).toString());
         shoppingCartService.clear(shoppingCartService.getByUser(mila));
         System.out.println(shoppingCartService.getByUser(mila));
     }

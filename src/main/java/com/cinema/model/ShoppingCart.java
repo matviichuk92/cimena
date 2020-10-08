@@ -3,7 +3,6 @@ package com.cinema.model;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +19,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private Long id;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @JoinTable(name = "cart_with_tickets",
             joinColumns = @JoinColumn(name = "car_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
