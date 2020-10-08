@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,8 +18,10 @@ public class MovieSession {
     @Column(name = "session_id")
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
+    @JoinColumn(name = "hall_id")
     private CinemaHall cinemaHall;
     @Column(name = "show_time")
     private LocalDateTime showTime;
