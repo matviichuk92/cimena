@@ -1,6 +1,5 @@
 package com.cinema;
 
-import com.cinema.exception.AuthenticationException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
@@ -9,6 +8,7 @@ import com.cinema.model.User;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
 import java.time.LocalDateTime;
@@ -25,8 +25,10 @@ public class Application {
             = (UserService) injector.getInstance(UserService.class);
     static final ShoppingCartService shoppingCartService
             = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+    static final OrderService orderService
+            = (OrderService) injector.getInstance(OrderService.class);
 
-    public static void main(String[] args) throws AuthenticationException {
+    public static void main(String[] args) {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         movie.setDescription("16+");
@@ -68,11 +70,9 @@ public class Application {
         shoppingCartService.addSession(session,roma);
         shoppingCartService.addSession(secondSession,roma);
         System.out.println(shoppingCartService.getByUser(roma));
-        shoppingCartService.registerNewShoppingCart(mila);
-        shoppingCartService.addSession(secondSession,mila);
-        System.out.println(shoppingCartService.getByUser(mila));
-        System.out.println(shoppingCartService.getByUser(mila).toString());
-        shoppingCartService.clear(shoppingCartService.getByUser(mila));
-        System.out.println(shoppingCartService.getByUser(mila));
+
+        orderService.completeOrder(roma, shoppingCartService.getByUser(roma).getTickets());
+        System.out.println("Empty cart : " + shoppingCartService.getByUser(roma));
+        System.out.println(orderService.getOrderHistory(roma));
     }
 }
