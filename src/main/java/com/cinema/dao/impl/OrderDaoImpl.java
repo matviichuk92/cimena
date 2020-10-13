@@ -47,7 +47,7 @@ public class OrderDaoImpl implements OrderDao {
             Root<Order> root = query.from(Order.class);
             Predicate byUserId = builder.equal(root.get("id"), user.getId());
             root.fetch("tickets", JoinType.LEFT);
-            query.select(root).where(byUserId);
+            query.select(root).distinct(true).where(byUserId);
             return session.createQuery(query).getResultList();
         } catch (Exception exception) {
             throw new DataProcessingException("Can't get order history by user id"
