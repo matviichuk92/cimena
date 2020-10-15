@@ -1,5 +1,6 @@
 package com.cinema.dao.impl;
 
+import com.cinema.Application;
 import com.cinema.dao.UserDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -24,6 +25,7 @@ public class UserDaoImpl implements UserDao {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
+            Application.logger.info(user);
             return user;
         } catch (Exception exception) {
             if (transaction != null) {

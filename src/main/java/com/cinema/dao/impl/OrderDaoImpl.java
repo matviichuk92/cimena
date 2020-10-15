@@ -1,5 +1,6 @@
 package com.cinema.dao.impl;
 
+import com.cinema.Application;
 import com.cinema.dao.OrderDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -26,6 +27,7 @@ public class OrderDaoImpl implements OrderDao {
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
+            Application.logger.info(order);
             return order;
         } catch (Exception exception) {
             if (transaction != null) {

@@ -1,5 +1,6 @@
 package com.cinema.dao.impl;
 
+import com.cinema.Application;
 import com.cinema.dao.ShoppingCartDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -25,6 +26,7 @@ public class ShoppingCartImpl implements ShoppingCartDao {
             transaction = session.beginTransaction();
             session.save(shoppingCart);
             transaction.commit();
+            Application.logger.info(shoppingCart);
             return shoppingCart;
         } catch (Exception exception) {
             if (transaction != null) {

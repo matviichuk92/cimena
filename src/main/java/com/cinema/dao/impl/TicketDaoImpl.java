@@ -1,5 +1,6 @@
 package com.cinema.dao.impl;
 
+import com.cinema.Application;
 import com.cinema.dao.TicketDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -19,6 +20,7 @@ public class TicketDaoImpl implements TicketDao {
             transaction = session.beginTransaction();
             session.save(ticket);
             transaction.commit();
+            Application.logger.info(ticket);
             return ticket;
         } catch (Exception exception) {
             if (transaction != null) {

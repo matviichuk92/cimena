@@ -1,5 +1,6 @@
 package com.cinema.dao.impl;
 
+import com.cinema.Application;
 import com.cinema.dao.MovieSessionDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -27,6 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
+            Application.logger.info(movieSession);
             return movieSession;
         } catch (Exception exception) {
             if (transaction != null) {

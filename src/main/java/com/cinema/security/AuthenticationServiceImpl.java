@@ -1,5 +1,6 @@
 package com.cinema.security;
 
+import com.cinema.Application;
 import com.cinema.exception.AuthenticationException;
 import com.cinema.lib.Inject;
 import com.cinema.lib.Service;
@@ -21,6 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<User> userFromDB = userService.findByEmail(email);
         if (userFromDB.isPresent() && HashUtil.hashPassword(password, userFromDB.get().getSalt())
                 .equals(userFromDB.get().getPassword())) {
+            Application.logger.info(userFromDB.get());
             return userFromDB.get();
         }
         throw new AuthenticationException("Incorrect email or password!");
@@ -33,6 +35,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(password);
         userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
+        Application.logger.info(user);
         return user;
     }
 }
