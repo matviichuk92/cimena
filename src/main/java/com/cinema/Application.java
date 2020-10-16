@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
 
 public class Application {
-    public static final Logger logger = Logger.getLogger(Application.class);
+    private static final Logger logger = Logger.getLogger(Application.class);
     private static final Injector injector = Injector.getInstance("com.cinema");
     private static final MovieService movieService
             = (MovieService) injector.getInstance(MovieService.class);
@@ -67,12 +67,16 @@ public class Application {
         roma.setPassword("1234");
 
         authenticationService.register(roma.getEmail(), roma.getPassword());
-        User romaFromDB = authenticationService.login(roma.getEmail(), roma.getPassword());
-        shoppingCartService.addSession(session, romaFromDB);
-        shoppingCartService.addSession(secondSession, romaFromDB);
-        orderService.completeOrder(romaFromDB, shoppingCartService
-                .getByUser(romaFromDB).getTickets());
-        logger.debug("Empty cart : " + shoppingCartService.getByUser(romaFromDB));
-        logger.debug(orderService.getOrderHistory(romaFromDB));
+        try {
+            roma = authenticationService.login(roma.getEmail(), roma.getPassword());
+            logger.info("User " + roma + " successfully logged in.");
+        } catch (AuthenticationException e) {
+            logger.warn("User " + roma + " failed to log in", e);
+        }
+        shoppingCartService.addSession(secondSession, roma);
+        orderService.completeOrder(roma, shoppingCartService
+                .getByUser(roma).getTickets());
+        logger.info("Empty cart : " + shoppingCartService.getByUser(roma));
+        logger.info("Get order history : " + orderService.getOrderHistory(roma));
     }
 }

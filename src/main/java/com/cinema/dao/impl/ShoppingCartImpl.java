@@ -1,6 +1,5 @@
 package com.cinema.dao.impl;
 
-import com.cinema.Application;
 import com.cinema.dao.ShoppingCartDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -12,11 +11,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class ShoppingCartImpl implements ShoppingCartDao {
+    private static final Logger logger = Logger.getLogger(ShoppingCartImpl.class);
+
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
         Transaction transaction = null;
@@ -26,7 +28,7 @@ public class ShoppingCartImpl implements ShoppingCartDao {
             transaction = session.beginTransaction();
             session.save(shoppingCart);
             transaction.commit();
-            Application.logger.info(shoppingCart);
+            logger.info("Successfully added " + shoppingCart + " to DB");
             return shoppingCart;
         } catch (Exception exception) {
             if (transaction != null) {
@@ -64,6 +66,7 @@ public class ShoppingCartImpl implements ShoppingCartDao {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.update(shoppingCart);
+            logger.info("Successfully updated the shopping cart " + shoppingCart);
             transaction.commit();
         } catch (Exception exception) {
             if (transaction != null) {

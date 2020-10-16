@@ -1,16 +1,18 @@
 package com.cinema.dao.impl;
 
-import com.cinema.Application;
 import com.cinema.dao.TicketDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
 import com.cinema.model.Ticket;
 import com.cinema.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class TicketDaoImpl implements TicketDao {
+    private static final Logger logger = Logger.getLogger(TicketDaoImpl.class);
+
     @Override
     public Ticket add(Ticket ticket) {
         Transaction transaction = null;
@@ -20,7 +22,7 @@ public class TicketDaoImpl implements TicketDao {
             transaction = session.beginTransaction();
             session.save(ticket);
             transaction.commit();
-            Application.logger.info(ticket);
+            logger.info("Successfully added " + ticket + " to DB");
             return ticket;
         } catch (Exception exception) {
             if (transaction != null) {

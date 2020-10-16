@@ -1,6 +1,5 @@
 package com.cinema.dao.impl;
 
-import com.cinema.Application;
 import com.cinema.dao.UserDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -11,11 +10,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class UserDaoImpl implements UserDao {
+    private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+
     @Override
     public User add(User user) {
         Transaction transaction = null;
@@ -25,7 +27,7 @@ public class UserDaoImpl implements UserDao {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-            Application.logger.info(user);
+            logger.info("Successfully added " + user + " to DB");
             return user;
         } catch (Exception exception) {
             if (transaction != null) {

@@ -1,6 +1,5 @@
 package com.cinema.dao.impl;
 
-import com.cinema.Application;
 import com.cinema.dao.MovieSessionDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
@@ -14,11 +13,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final Logger logger = Logger.getLogger(MovieSessionDaoImpl.class);
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -28,7 +30,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
-            Application.logger.info(movieSession);
+            logger.info("Successfully added " + movieSession + " to DB");
             return movieSession;
         } catch (Exception exception) {
             if (transaction != null) {
