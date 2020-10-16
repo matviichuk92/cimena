@@ -69,7 +69,6 @@ public class Application {
         authenticationService.register(roma.getEmail(), roma.getPassword());
         try {
             roma = authenticationService.login(roma.getEmail(), roma.getPassword());
-            logger.info("User " + roma + " successfully logged in.");
         } catch (AuthenticationException e) {
             logger.warn("User " + roma + " failed to log in", e);
         }
