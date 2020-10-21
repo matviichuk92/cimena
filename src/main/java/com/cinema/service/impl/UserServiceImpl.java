@@ -3,7 +3,7 @@ package com.cinema.service.impl;
 import com.cinema.dao.UserDao;
 import com.cinema.model.User;
 import com.cinema.service.UserService;
-import com.cinema.until.HashUtil;
+import com.cinema.util.HashUtil;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,7 @@ import com.cinema.exception.AuthenticationException;
 import com.cinema.model.User;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
-import com.cinema.until.HashUtil;
+import com.cinema.util.HashUtil;
 import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
