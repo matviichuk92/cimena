@@ -1,4 +1,4 @@
-package com.cinema.util;
+package com.cinema.until;
 
 import com.cinema.exception.HashingPasswordException;
 import java.security.MessageDigest;
