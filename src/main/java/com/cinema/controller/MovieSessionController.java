@@ -34,9 +34,9 @@ public class MovieSessionController {
 
     @GetMapping("/available")
     public List<MovieSessionResponseDto> getAvailableSession(
-            @RequestParam Long id, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        return movieSessionService.findAvailableSessions(id, date)
-                .stream().map(movieSessionDtoMapper::createSessionResponse)
+            @RequestParam Long id, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return movieSessionService.findAvailableSessions(id, date).stream()
+                .map(movieSessionDtoMapper::createSessionResponse)
                 .collect(Collectors.toList());
     }
 }

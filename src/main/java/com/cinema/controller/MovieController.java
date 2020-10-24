@@ -25,8 +25,7 @@ public class MovieController {
 
     @GetMapping
     public List<MovieResponseDto> getAll() {
-        return movieService.getAll()
-                .stream()
+        return movieService.getAll().stream()
                 .map(movieDtoMapper::createMovieResponse)
                 .collect(Collectors.toList());
     }
