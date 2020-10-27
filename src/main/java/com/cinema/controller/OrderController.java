@@ -1,5 +1,7 @@
 package com.cinema.controller;
 
+import com.cinema.model.Ticket;
+import com.cinema.model.User;
 import com.cinema.model.dto.OrderResponseDto;
 import com.cinema.model.dto.mapper.OrderDtoMapper;
 import com.cinema.service.OrderService;
@@ -31,8 +33,9 @@ public class OrderController {
 
     @PostMapping("/complete")
     public void completeOrder(@RequestParam Long userId) {
-        orderService.completeOrder(userService.get(userId),
-                shoppingCartService.getByUser(userService.get(userId)).getTickets());
+        User user = userService.get(userId);
+        List<Ticket> tickets = shoppingCartService.getByUser(user).getTickets();
+        orderService.completeOrder(user, tickets);
     }
 
     @GetMapping
