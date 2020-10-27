@@ -36,7 +36,7 @@ public class MovieSessionController {
     public List<MovieSessionResponseDto> getAvailableSession(
             @RequestParam Long id, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return movieSessionService.findAvailableSessions(id, date).stream()
-                .map(movieSessionDtoMapper::mapToSession)
+                .map(movieSessionDtoMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 }
