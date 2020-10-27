@@ -12,7 +12,7 @@ public class ShoppingCartDtoMapper {
     public ShoppingCartDtoResponse mapToDto(ShoppingCart shoppingCart) {
         ShoppingCartDtoResponse cart = new ShoppingCartDtoResponse();
         cart.setId(shoppingCart.getId());
-        cart.setTicketsId(shoppingCart.getTickets().stream()
+        cart.setTicketIds(shoppingCart.getTickets().stream()
                 .map(Ticket::getId).collect(Collectors.toList()));
         return cart;
     }
