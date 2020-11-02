@@ -18,8 +18,6 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "salt")
-    private byte[] salt;
 
     public Long getId() {
         return id;
@@ -43,14 +41,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
     }
 
     @Override
