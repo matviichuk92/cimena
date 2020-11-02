@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailConstraint {
-    String message() default "The email not valid!";
+    String message() default "The email is not valid!";
 
     Class<?>[] groups() default {};
 

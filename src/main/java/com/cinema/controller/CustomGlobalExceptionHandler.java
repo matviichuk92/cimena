@@ -26,7 +26,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("timestamp", new Date());
         body.put("status", status.value());
         List<String> errors = exception.getBindingResult()
-                .getFieldErrors()
+                .getAllErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());

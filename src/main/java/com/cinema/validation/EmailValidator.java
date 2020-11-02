@@ -7,10 +7,6 @@ public class EmailValidator implements ConstraintValidator<EmailConstraint, Stri
     public static final String VALID_EMAIL = "^(.+)@(.+)$";
 
     @Override
-    public void initialize(EmailConstraint constraintAnnotation) {
-    }
-
-    @Override
     public boolean isValid(String email, ConstraintValidatorContext validatorContext) {
         return email != null && email.matches(VALID_EMAIL);
     }
